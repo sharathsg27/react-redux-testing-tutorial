@@ -14,7 +14,7 @@ describe('Header Component', () => {
         component = compInit();
     });
 
-    it('should should render without error', function () {
+    it('should render without error', function () {
         const headerContainer = findByTestAttr(component, 'headerComponent');
         expect(headerContainer.length).toBe(1);
     });

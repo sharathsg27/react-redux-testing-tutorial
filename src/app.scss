@@ -8,3 +8,10 @@ html, body {
 *, *:before, *:after {
   box-sizing: inherit;
 }
+
+.main {
+  display: grid;
+  grid-template-rows: 100vh;
+  grid-template-columns: 1fr;
+  padding: 20px 15px;
+}
