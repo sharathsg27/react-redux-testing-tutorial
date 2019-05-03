@@ -1,7 +1,8 @@
-import {findByTestAttr} from "../../../../utils";
+import {findByTestAttr, checkProps} from "../../../../utils";
 import {shallow} from 'enzyme';
 import HeadLine from "../index";
 import React from "react";
+
 
 
 const compInit = (props = {}) => {
@@ -10,44 +11,67 @@ const compInit = (props = {}) => {
 
 describe('Headline Component', () => {
 
+    // Check PropTypes
+    describe('Checking PropTypes', () => {
+
+        it('Should not throw a warning', () => {
+
+            const expectedProps = {
+                header: 'Test header',
+                desc: 'Test desc',
+                user: {
+                    firstName: 'test firstName',
+                    lastName: 'test lastName',
+                    isDeveloper: true,
+                    age: 44,
+                    skills: ['test', 'test', 'test']
+                }
+            };
+            const propsErr = checkProps(HeadLine, expectedProps);
+            expect(propsErr).toBeUndefined();
+
+        });
+
+    });
 
     describe('Have props', () => {
 
-        let component;
+        let wrapper;
         beforeEach(() => {
             const props = {
                 header: 'Test header',
-                desc: 'Test desc'
+                desc: 'Test desc',
+                user: {
+                    firstName: 'test firstName',
+                    lastName: 'test lastName',
+                    isDeveloper: true,
+                    age: 44,
+                    skills: ['test', 'test', 'test']
+                }
+
             };
-            component = compInit(props);
+            wrapper = compInit(props);
         });
 
-        it('should render with props', () => {
-            const wrapper = findByTestAttr(component, 'headlineComponent');
-            expect(wrapper.length).toBe(1);
+        it('Should render without errors', () => {
+            const component = findByTestAttr(wrapper, 'headlineComponent');
+            expect(component.length).toBe(1);
         });
 
         it('should render h1', function () {
-            const h1 = findByTestAttr(component, 'header');
+            const h1 = findByTestAttr(wrapper, 'header');
             expect(h1.length).toBe(1);
         });
 
         it('should render desc', function () {
-            const desc = findByTestAttr(component, 'description');
+            const desc = findByTestAttr(wrapper, 'description');
             expect(desc.length).toBe(1);
         });
-    });
 
-    describe('Have no props', () => {
-        let component;
-        beforeEach(() => {
-            component = compInit();
+        it('should render user', function () {
+            const user = findByTestAttr(wrapper, 'user');
+            expect(user.length).toBe(1);
         });
-
-        it('should render without props', function () {
-            expect(component.length).toBe(1);
-        });
-
     });
 
 });
